@@ -11,7 +11,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 
     srand (time(NULL));
 
-    int fila, columna;
+    int fila, columna, fila_cabeza, columna_cabeza;
 
     // Todas las celdas con espacios
     for (int i = 1; i < 7; i++) {
@@ -20,28 +20,11 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
         }
     }
 
-    // Ahora sumo las manzanas
-    for (int i = 1; i < 5; i++) {
-        do {
-            // genero una celda random para la manzana
-            fila = rand() % 5;
-            fila++;
-            columna = rand() % 5;
-            columna++;
-        }while(tablero[fila][columna]!=' ');
 
-
-        // Esa celda tiene un espacio, guardo la manzana
-        tablero[fila][columna] = 'M';
-
-
-        // guardo las manzanas para comparar mas rapido despues
-        manzanas[i][0] = fila;
-        manzanas[i][1] = columna;
-    }
 
     // serpiente[0] tiene la celda de la cabeza
     // serpiente[1] y [2] tienen el cuerpo
+    // si viene de eventos la serpiente ya esta definida
     if (!serpiente_definida){
 
         for (int i = 1; i < 4; i++) {
@@ -53,15 +36,18 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
             else tablero[fila][columna] = 'c';
             */
 
+            // si i=1 es la cabeza
             if (i==1) {
                 // guardo la cabeza en cualquier casilla que este libre
                 do {
                     // genero una celda random para la serpiente
-                    fila = rand() % 5;
-                    fila++;
+                    fila = rand() % 3;//0 1 2
+                    fila = fila + 4;//3 4 5
+                    fila_cabeza = fila;
                     columna = rand() % 5;
-                    columna++;
-                }while(tablero[fila][columna]!=' ');
+                    //columna++;
+                    columna_cabeza = columna;
+                }while(!tablero[fila][columna]==' ');
 
                 serpiente[i][0] = fila;
                 serpiente[i][1] = columna;
@@ -73,9 +59,6 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 
 
                 if (fila>1)fila--;
-                else if (columna>1) columna--;
-                else columna++;
-
 
                 // temporal. borrar!! Esta mal! Setear serpiente.
                 if (tablero[fila][columna]==' ') {
@@ -83,13 +66,47 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
                     serpiente[i][1] = columna;
                     tablero[fila][columna] = 'c';
                 }
-
             }
+        }
 
-            serpiente_definida = true;
+        serpiente_definida = true;
+
+    } else {
+
+        // Inserto la serpiente
+        for (int i = 1; i < 4; i++) {
+            fila = serpiente[i][0];
+            columna = serpiente[i][1];
+            if (i==1) tablero[fila][columna] = 'C';
+            else tablero[fila][columna] = 'c';
         }
 
     }
+
+
+
+
+
+    // Ahora sumo las manzanas
+    for (int i = 1; i < 5; i++) {
+        do {
+            // genero una celda random para la manzana
+            fila = rand() % 5;
+            fila++;
+            columna = rand() % 5;
+            columna++;
+        }while(!tablero[fila][columna]==' ');
+
+
+        // Esa celda tiene un espacio, guardo la manzana
+        tablero[fila][columna] = 'M';
+
+
+        // guardo las manzanas para comparar mas rapido despues
+        manzanas[i][0] = fila;
+        manzanas[i][1] = columna;
+    }
+
 
 };
 
@@ -100,6 +117,14 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
     srand (time(NULL));
 
     int fila, columna;
+
+
+    // Todas las celdas con espacios
+    for (int i = 1; i < 7; i++) {
+        for (int j = 1; j < 7; j++) {
+            tablero[i][j] = ' ';
+        }
+    }
 
     // Inserto las manzanas
     for (int i = 1; i < 5; i++) {
@@ -124,8 +149,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
 
 /// Muevo la serpiente en el tablero
 void mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
-    //printf("Muevo la serpiente...\n");
-
+    printf("Muevo la serpiente...\n");
 
 
 
@@ -171,7 +195,25 @@ void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][
     printf("6 | | | | | | |\n");
     */
 
-    srand (time(NULL));
+    //srand (time(NULL));
+
+    int fila, columna;
+
+    // Todas las celdas con espacios
+    for (int i = 1; i < 7; i++) {
+        for (int j = 1; j < 7; j++) {
+            tablero[i][j] = ' ';
+        }
+    }
+
+    // Inserto la serpiente
+    for (int i = 1; i < 4; i++) {
+        fila = serpiente[i][0];
+        columna = serpiente[i][1];
+        if (i==1) tablero[fila][columna] = 'C';
+        else tablero[fila][columna] = 'c';
+    }
+
 
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
