@@ -7,11 +7,12 @@
 /// Inicializa las manzanas en el tablero.
 /// Llamada al iniciar el programa y luego de los eventos.
 /// manzana tiene 4 elementos de 2 elementos cada una: fila y columna.
+/// serpiente tiene 3 elementos de 2 elementos cada una: fila y columna.
 void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char tablero[][6], bool serpiente_definida){
 
     srand (time(NULL));
 
-    int fila, columna, fila_cabeza, columna_cabeza;
+    int fila, columna;
 
     // Todas las celdas con espacios
     for (int i = 1; i < 7; i++) {
@@ -19,7 +20,6 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
             tablero[i][j] = ' ';
         }
     }
-
 
 
     // serpiente[0] tiene la celda de la cabeza
@@ -43,14 +43,12 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
                     // genero una celda random para la serpiente
                     fila = rand() % 3;//0 1 2
                     fila = fila + 4;//3 4 5
-                    fila_cabeza = fila;
                     columna = rand() % 5;
-                    //columna++;
-                    columna_cabeza = columna;
+                    columna++;
                 }while(!tablero[fila][columna]==' ');
 
-                serpiente[i][0] = fila;
-                serpiente[i][1] = columna;
+                serpiente[1][0] = fila;
+                serpiente[1][1] = columna;
 
                 // temporal. borrar!!
                 tablero[fila][columna] = 'C';
@@ -73,7 +71,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 
     } else {
 
-        // Inserto la serpiente
+        // Sumo la serpiente
         for (int i = 1; i < 4; i++) {
             fila = serpiente[i][0];
             columna = serpiente[i][1];
@@ -149,7 +147,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
 
 /// Muevo la serpiente en el tablero
 void mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
-
+/*
     int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
 
     printf("Muevo la serpiente...\n");
@@ -167,7 +165,7 @@ void mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
         serpiente[i][1] = 1; //"columna_random";
 
     }
-
+*/
 };
 
 
@@ -175,7 +173,7 @@ void mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
 /// 1 acerto - 0 no acerto
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2]){
     printf("Chequeo si acerto la serpiente...\n");
-    return false;
+    return true;
 };
 
 
@@ -277,12 +275,10 @@ int main()
 
     setear_tablero(tamanio, manzanas, serpiente, tablero, serpiente_definida);
 
-
     // bucle principal del juego
     do {
 
         imprimir_tablero_normal(tamanio, manzanas, tablero);
-
         ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
         mover_serpiente(tamanio, serpiente, tablero);
         acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente);
