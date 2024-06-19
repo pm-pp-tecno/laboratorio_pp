@@ -183,7 +183,7 @@ bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2]){
 /// 1 comio - 0 no comio
 bool comio_manzana(char manzanas[][2], char serpiente[][2]){
     printf("Chequeo si comio manzana...\n");
-    return true;
+    return false;
 };
 
 
@@ -277,10 +277,11 @@ int main()
 
     setear_tablero(tamanio, manzanas, serpiente, tablero, serpiente_definida);
 
-    imprimir_tablero_normal(tamanio, manzanas, tablero);
 
     // bucle principal del juego
     do {
+
+        imprimir_tablero_normal(tamanio, manzanas, tablero);
 
         ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
         mover_serpiente(tamanio, serpiente, tablero);
@@ -324,7 +325,7 @@ int main()
             }
 
             setear_tablero(tamanio, manzanas, serpiente, tablero, serpiente_definida);
-            imprimir_tablero_normal(tamanio, manzanas, tablero);
+            //imprimir_tablero_normal(tamanio, manzanas, tablero);
         } else printf("No hubo eventos en este turno, vuelvo a comenzar...\n");
 
 
