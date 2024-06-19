@@ -149,9 +149,24 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
 
 /// Muevo la serpiente en el tablero
 void mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
+
+    int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
+
     printf("Muevo la serpiente...\n");
 
+    // ubico la cabeza:
+    fila_cabeza = serpiente[0][0];
+    columna_cabeza = serpiente[0][1];
 
+    // Muevo la cebeza 3 lugares
+    for (int i = 3; i > 0; i--) {
+
+        //hacer chequeos a partir de la celda de la cabeza.
+        //serpiente[3][0] queda la cola. luego en el proximo queda el cuerpo y en serpiente[0][0] queda la cabeza.
+        serpiente[i][0] = 1; //"fila_random";
+        serpiente[i][1] = 1; //"columna_random";
+
+    }
 
 };
 
@@ -217,23 +232,16 @@ void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][
 
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
-        printf("%d |", i);
+        printf("%d ", i);
         for (int j = 1; j < 7; j++) {
-            printf("%c|", tablero[i][j]);
+            printf("|%c", tablero[i][j]);
         }
-        printf("\n");
+        printf("|\n");
     }
 
 };
 
 
-/* Eliminada, el control se hace directo en ingresar_celda()
-/// Valida los datos ingresados por el usuario
-bool validar_datos(int tamanio, int filaUsuario, char comaUsuario, int colUsuario){
-    if (filaUsuario<1 || filaUsuario>6 || colUsuario<1 || colUsuario>6 || comaUsuario!=',') return false;
-    else return true;
-};
-*/
 
 ///
 bool ingresar_celda(int tamanio, int &filaUsuario, char &comaUsuario, int &colUsuario){
@@ -329,3 +337,10 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+
+
