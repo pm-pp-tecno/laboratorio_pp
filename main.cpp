@@ -42,7 +42,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
                 do {
                     // genero una celda random para la serpiente
                     fila = rand() % 3;//0 1 2
-                    fila = fila + 4;//3 4 5
+                    fila = fila + 4;//4 5 6
                     columna = rand() % 5;
                     columna++;
                 }while(!tablero[fila][columna]==' ');
@@ -80,9 +80,6 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
         }
 
     }
-
-
-
 
 
     // Ahora sumo las manzanas
@@ -288,9 +285,12 @@ int main()
         if (acertoSerpiente || comioManzana){
             if (acertoSerpiente){
                 puntosUsuario++;
+                printf("Usuario acerto!\n");
             } else{
                 puntosSerpiente++;
+                printf("Serpiente comio manzana!\n");
             }
+            printf("Puntos usuario: %d\nPuntos serpiente: %d\n", puntosUsuario, puntosSerpiente);
 
 
             // Para ambos eventos se imprime el mismo tablero de eventos.
@@ -312,9 +312,12 @@ int main()
                     if (puntosUsuario < 3 && puntosSerpiente < 3) {
                         if (acertoSerpiente){
                             puntosUsuario++;
+                            printf("Usuario acerto!\n");
                         } else{
                             puntosSerpiente++;
+                            printf("Serpiente comio manzana!\n");
                         }
+                        printf("Puntos usuario: %d\nPuntos serpiente: %d\n", puntosUsuario, puntosSerpiente);
                     }
 
                 }
@@ -334,10 +337,3 @@ int main()
 
     return 0;
 }
-
-
-
-
-
-
-
