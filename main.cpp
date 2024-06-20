@@ -158,7 +158,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
     printf("Muevo la serpiente...\n");
 
     //int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
-    int fila_cabeza, columna_cabeza, mov, fila, columna;
+    int fila_cabeza, columna_cabeza, mov, fila, columna, fila_vieja, columna_vieja;
     bool comio_manzana = false, encontre_celda = false;
 
     // obtener nuevas filas posibles para mover la cabeza
@@ -211,21 +211,20 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
     // Muevo la cebeza 3 lugares
     for (int i = 3; i > 0; i--) {
 
+        fila_vieja = fila_cabeza;
+        columna_vieja = columna_cabeza;
+
         do {
 
-            mov = rand() % 4;
+            fila_cabeza = fila_vieja;
+            columna_cabeza = columna_vieja;
 
-            //fila_vieja = fila_cabeza;
-            //columna_vieja = columna_cabeza;
+            mov = rand() % 4;
 
             switch(mov){
                 case 0:
                     //ariba de cabeza
-                    if (fila_cabeza > 2) {
-                        fila_cabeza--;
-                        printf("ARRIBA\n");
-                    }
-
+                    if (fila_cabeza > 2) {fila_cabeza--;printf("ARRIBA\n");}
                 break;
                 case 1:
                     //derecha de cabeza
@@ -239,24 +238,16 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                     //izquierda de cabeza
                     if (columna_cabeza > 2) {columna_cabeza--; printf("IZQUIERDA\n");}
                 break;
-                /*
-                default:
-                    printf("Comando equivocado\n");
-                break;
-                */
-                //printf("Fila cabeza: %d - Columna cabeza: %d \n", fila_cabeza, columna_cabeza);
             }
-
-            //encontre_celda = true;
 
             if (tablero[fila_cabeza][columna_cabeza] != '#' && tablero[fila_cabeza][columna_cabeza] != '*' ) {
                 encontre_celda = true;
                 //fila_nueva = fila_cabeza
                 //columna_nueva = columna_cabeza;
-            }
 
-            if (tablero[fila_cabeza][columna_cabeza] == 'o'){
-                comio_manzana = true;
+                if (tablero[fila_cabeza][columna_cabeza] == 'o'){
+                    comio_manzana = true;
+                }
             }
 
         }while (!encontre_celda);
@@ -269,6 +260,11 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
         serpiente[i][0] = fila_cabeza;
         serpiente[i][1] = columna_cabeza;
 
+
+        fila_vieja = fila_cabeza;
+        columna_vieja = columna_cabeza;
+
+
         printf("Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
 
         // ubico donde estaria avanzando la cabeza:
@@ -276,7 +272,8 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
         //columna_cabeza = columna_cabeza;
 
 
-        // volver a insertar la serpiente.
+        // volver a insertar la serpiente
+
 
         printf("Tablero despues de mover serpiente.\n");
         printf("   1 2 3 4 5 6\n");
