@@ -156,11 +156,11 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
 
 
 /// Muevo la serpiente en el tablero
-bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
+bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2]){
     printf("Muevo la serpiente...\n");
 
     //int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
-    int fila_cabeza, columna_cabeza, mov, fila, columna, fila_nueva, columna_nueva;
+    int fila_cabeza, columna_cabeza, mov, fila, columna, fila_vieja, columna_vieja;
     bool comio_manzana = false, encontre_celda = false;
 
     // obtener nuevas filas posibles para mover la cabeza
@@ -170,6 +170,12 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
 
 
 
+    // Inserto las manzanas
+    for (int i = 1; i < 5; i++) {
+        fila = manzanas[i][0];
+        columna = manzanas[i][1];
+        tablero[fila][columna] = 'o';
+    }
 
     // Temporal, borrar! El tablero trae manzanas
     // Tengo que ubicar primero a la serpiente.
@@ -217,16 +223,16 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
     // serpiente[3] ya esta correctamente en el lugar
     for (int i = 3; i > 0; i--) {
 
-        fila_nueva = fila_cabeza;
-        columna_nueva = columna_cabeza;
+        fila_vieja = fila_cabeza;
+        columna_vieja = columna_cabeza;
         encontre_celda = false;
 
         do {
 
             //printf("Antes - Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
 
-            fila_cabeza = fila_nueva;
-            columna_cabeza = columna_nueva;
+            fila_cabeza = fila_vieja;
+            columna_cabeza = columna_vieja;
 
             //printf("Despues - Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
 
@@ -297,8 +303,11 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
         else tablero[fila_cabeza][columna_cabeza] = '*';
 
 
-        fila_nueva = fila_cabeza;
-        columna_nueva = columna_cabeza;
+        tablero[fila_vieja][columna_vieja] = ' ';
+
+
+        fila_vieja = fila_cabeza;
+        columna_vieja = columna_cabeza;
 
 
         printf("Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
@@ -444,7 +453,7 @@ int main()
 
         imprimir_tablero_normal(tamanio, manzanas, tablero);
         ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
-        comioManzana = mover_serpiente(tamanio, serpiente, tablero);
+        comioManzana = mover_serpiente(tamanio, serpiente, tablero, manzanas);
         acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente);
         //comioManzana = comio_manzana(manzanas, serpiente);
 
@@ -472,7 +481,7 @@ int main()
                 for (contador=0; contador < 3; contador++){
                     imprimir_tablero_eventos(tamanio, manzanas, serpiente, tablero);
                     ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
-                    comioManzana = mover_serpiente(tamanio, serpiente, tablero);
+                    comioManzana = mover_serpiente(tamanio, serpiente, tablero, manzanas);
                     acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente);
                     //comioManzana = comio_manzana(manzanas, serpiente);
 
