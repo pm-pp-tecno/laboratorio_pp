@@ -221,7 +221,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
             switch(mov){
                 case 0:
                     //ariba de cabeza
-                    if (fila_cabeza > 1) {
+                    if (fila_cabeza > 2) {
                         fila_cabeza--;
                         printf("ARRIBA\n");
                     }
@@ -229,15 +229,15 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                 break;
                 case 1:
                     //derecha de cabeza
-                    if (columna_cabeza < 7) {columna_cabeza++; printf("DERECHA\n");}
+                    if (columna_cabeza < 6) {columna_cabeza++; printf("DERECHA\n");}
                 break;
                 case 2:
                     //abajo de cabeza
-                    if (fila_cabeza < 7) {fila_cabeza++; printf("ABAJO\n");}
+                    if (fila_cabeza < 6) {fila_cabeza++; printf("ABAJO\n");}
                 break;
                 case 3:
                     //izquierda de cabeza
-                    if (columna_cabeza > 1) {columna_cabeza--; printf("ABAJO\n");}
+                    if (columna_cabeza > 2) {columna_cabeza--; printf("IZQUIERDA\n");}
                 break;
                 /*
                 default:
