@@ -145,7 +145,8 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
 /// Muevo la serpiente en el tablero
 void mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
 /*
-    int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
+    //int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
+    int fila_cabeza, columna_cabeza;
 
     printf("Muevo la serpiente...\n");
 
