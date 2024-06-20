@@ -223,12 +223,12 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
 
         do {
 
-            printf("Antes - Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
+            //printf("Antes - Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
 
             fila_cabeza = fila_nueva;
             columna_cabeza = columna_nueva;
 
-            printf("Despues - Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
+            //printf("Despues - Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
 
             mov = rand() % 4;
 
@@ -237,7 +237,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                     //ariba de cabeza
                     if (fila_cabeza > 2) {
                         fila_cabeza--;
-                        printf("ARRIBA\n");
+                        //printf("ARRIBA\n");
                         if (tablero[fila_cabeza][columna_cabeza] == ' ')
                             encontre_celda = true;
                     }
@@ -246,7 +246,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                     //derecha de cabeza
                     if (columna_cabeza < 6) {
                         columna_cabeza++;
-                        printf("DERECHA\n");
+                        //printf("DERECHA\n");
                         if (tablero[fila_cabeza][columna_cabeza] == ' ')
                             encontre_celda = true;
                     }
@@ -255,7 +255,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                     //abajo de cabeza
                     if (fila_cabeza < 6) {
                         fila_cabeza++;
-                        printf("ABAJO\n");
+                        //printf("ABAJO\n");
                         if (tablero[fila_cabeza][columna_cabeza] == ' ')
                             encontre_celda = true;
                     }
@@ -264,7 +264,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                     //izquierda de cabeza
                     if (columna_cabeza > 2) {
                         columna_cabeza--;
-                        printf("IZQUIERDA\n");
+                        //printf("IZQUIERDA\n");
                         if (tablero[fila_cabeza][columna_cabeza] == ' ')
                             encontre_celda = true;
                     }
