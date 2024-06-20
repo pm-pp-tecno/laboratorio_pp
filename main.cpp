@@ -424,7 +424,7 @@ bool ingresar_celda(int tamanio, int &filaUsuario, char &comaUsuario, int &colUs
         scanf("%d", &colUsuario);
 
         //datos_validos = validar_datos(tamanio, filaUsuario, comaUsuario, colUsuario);
-        if (filaUsuario>1 && filaUsuario<6 && colUsuario>1 && colUsuario<6 && comaUsuario==',') return true;
+        if (filaUsuario>0 && filaUsuario<7 && colUsuario>0 && colUsuario<7 && comaUsuario==',') return true;
 
         //if (!datos_validos) printf("Entrada invalida, vuelva a intentarlo:\n");
         printf("Entrada invalida, vuelva a intentarlo:\n");
