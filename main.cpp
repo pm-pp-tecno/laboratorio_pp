@@ -32,8 +32,8 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
             /*
             // Esa celda tiene un espacio, me sirve para la serpiente
             // Pero no la voy a guardar asi puedo imprimir en normal
-            if (i==1) tablero[fila][columna] = 'C';
-            else tablero[fila][columna] = 'c';
+            if (i==1) tablero[fila][columna] = '#';
+            else tablero[fila][columna] = '*';
             */
 
             // si i=1 es la cabeza
@@ -51,7 +51,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
                 serpiente[1][1] = columna;
 
                 // temporal. borrar!!
-                tablero[fila][columna] = 'C';
+                tablero[fila][columna] = '#';
             } else {
                 // no es la cabeza. agrego en fila para abajo, sino cambio columna
 
@@ -62,7 +62,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
                 if (tablero[fila][columna]==' ') {
                     serpiente[i][0] = fila;
                     serpiente[i][1] = columna;
-                    tablero[fila][columna] = 'c';
+                    tablero[fila][columna] = '*';
                 }
             }
         }
@@ -86,8 +86,8 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
         for (int i = 1; i < 4; i++) {
             fila = serpiente[i][0];
             columna = serpiente[i][1];
-            if (i==1) tablero[fila][columna] = 'C';
-            else tablero[fila][columna] = 'c';
+            if (i==1) tablero[fila][columna] = '#';
+            else tablero[fila][columna] = '*';
         }
 
     }
@@ -105,7 +105,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 
 
         // Esa celda tiene un espacio, guardo la manzana
-        tablero[fila][columna] = 'M';
+        tablero[fila][columna] = 'o';
 
 
         // guardo las manzanas para comparar mas rapido despues
@@ -136,7 +136,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
     for (int i = 1; i < 5; i++) {
         fila = manzanas[i][0];
         columna = manzanas[i][1];
-        tablero[fila][columna] = 'M';
+        tablero[fila][columna] = 'o';
     }
 
     printf("Tablero normal\n");
@@ -176,7 +176,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
     /*
     // Temporal, borrar! El tablero trae manzanas
     // Tengo que ubicar primero a la serpiente.
-    printf("Tablero antes de ubicar a la serpiente.\n");
+    printf("Tablero antes de mover serpiente.\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
         printf("%d |", i);
@@ -193,8 +193,8 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
     for (int i = 1; i < 4; i++) {
         fila = serpiente[i][0];
         columna = serpiente[i][1];
-        if (i==1) tablero[fila][columna] = 'C';
-        else tablero[fila][columna] = 'c';
+        if (i==1) tablero[fila][columna] = '#';
+        else tablero[fila][columna] = 'c*';
     }
 
     printf("Tablero antes de mover serpiente.\n");
@@ -219,55 +219,25 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
             //columna_vieja = columna_cabeza;
 
             switch(mov){
-                case '0':
+                case 0:
                     //ariba de cabeza
-                    if (fila_cabeza > 2) {
+                    if (fila_cabeza > 1) {
                         fila_cabeza--;
                         printf("ARRIBA\n");
                     }
 
-                    /*
-                    // En el ejercicio 38 hace esto:
-                    matriz[pos1A][pos2A]=' ';
-                    pos1A++;
-                    matriz[pos1A][pos2A]='*';
-                    */
-
-
-                    /*
-                    // y en el 39 hace el movimiento ficticio, sino vuelve pa atras:
-                    //Hago un movimiento ficticio para ver si nos deja en un lugar adecuado
-                    pos1=pos1A;
-                    pos2=pos2A;
-                    switch(mov){
-                        case 'A':case 'a': pos2--; break; //Izquierda
-                        case 'D':case 'd': pos2++; break; //Derecha
-                        case 'W':case 'w': pos1--; break; //Subir
-                        case 'S':case 's': pos1++; break; //Bajar
-                        default: printf("Comando equivocado\n"); break;
-                    }
-                    if(pos1>=0 && pos1<tam && pos2>=0 && pos2<tam)
-                        if(matriz[pos1][pos2]!='O'){
-                            matriz[pos1A][pos2A]=' ';
-                            matriz[pos1][pos2]='*';
-                            pos1A=pos1;
-                            pos2A=pos2;
-                        }
-
-                     */
-
                 break;
-                case '1':
+                case 1:
                     //derecha de cabeza
-                    if (columna_cabeza < 6) {columna_cabeza++; printf("DERECHA\n");}
+                    if (columna_cabeza < 7) {columna_cabeza++; printf("DERECHA\n");}
                 break;
-                case '2':
+                case 2:
                     //abajo de cabeza
-                    if (fila_cabeza < 6) {fila_cabeza++; printf("ABAJO\n");}
+                    if (fila_cabeza < 7) {fila_cabeza++; printf("ABAJO\n");}
                 break;
-                case '3':
+                case 3:
                     //izquierda de cabeza
-                    if (columna_cabeza > 2) columna_cabeza--;
+                    if (columna_cabeza > 1) {columna_cabeza--; printf("ABAJO\n");}
                 break;
                 /*
                 default:
@@ -277,14 +247,15 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                 //printf("Fila cabeza: %d - Columna cabeza: %d \n", fila_cabeza, columna_cabeza);
             }
 
+            //encontre_celda = true;
 
-            if (tablero[fila_cabeza][columna_cabeza] != 'C' && tablero[fila_cabeza][columna_cabeza] != 'c' ) {
+            if (tablero[fila_cabeza][columna_cabeza] != '#' && tablero[fila_cabeza][columna_cabeza] != '*' ) {
                 encontre_celda = true;
                 //fila_nueva = fila_cabeza
                 //columna_nueva = columna_cabeza;
             }
 
-            if (tablero[fila_cabeza][columna_cabeza] == 'M'){
+            if (tablero[fila_cabeza][columna_cabeza] == 'o'){
                 comio_manzana = true;
             }
 
@@ -303,6 +274,19 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
         // ubico donde estaria avanzando la cabeza:
         //fila_cabeza = fila_cabeza;
         //columna_cabeza = columna_cabeza;
+
+
+        // volver a insertar la serpiente.
+
+        printf("Tablero despues de mover serpiente.\n");
+        printf("   1 2 3 4 5 6\n");
+        for (int i = 1; i < 7; i++) {
+            printf("%d |", i);
+            for (int j = 1; j < 7; j++) {
+                printf("%c|", tablero[i][j]);
+            }
+            printf("\n");
+        }
 
     }
 
@@ -324,13 +308,13 @@ bool comio_manzana(char manzanas[][2], char serpiente[][2]){
     return false;
 };
 
-
+/*
 /// Chequea si hubo algun evento en el turno actual
 /// Si acerto, entonces le suma puntos al usuario e imprime el tablero de eventos
 void eventos(int tamanio, int acerto=0, int comio=0){
     printf("Chequeo si hubo algun evento...\n");
 };
-
+*/
 
 /// Imprime el tablero de eventos
 /// Llamado desde eventos para imprimir los 2 turnos especiales de serpiente visible.
@@ -363,8 +347,8 @@ void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][
     for (int i = 1; i < 4; i++) {
         fila = serpiente[i][0];
         columna = serpiente[i][1];
-        if (i==1) tablero[fila][columna] = 'C';
-        else tablero[fila][columna] = 'c';
+        if (i==1) tablero[fila][columna] = '#';
+        else tablero[fila][columna] = '*';
     }
 
 
