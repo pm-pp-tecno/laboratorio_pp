@@ -176,7 +176,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
     /*
     // Temporal, borrar! El tablero trae manzanas
     // Tengo que ubicar primero a la serpiente.
-    printf("Tablero antes de mover serpiente.\n");
+    printf("Tablero antes de ubicar a la serpiente.\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
         printf("%d |", i);
@@ -225,6 +225,36 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
                         fila_cabeza--;
                         printf("ARRIBA\n");
                     }
+
+                    /*
+                    // En el ejercicio 38 hace esto:
+                    matriz[pos1A][pos2A]=' ';
+                    pos1A++;
+                    matriz[pos1A][pos2A]='*';
+                    */
+
+
+                    /*
+                    // y en el 39 hace el movimiento ficticio, sino vuelve pa atras:
+                    //Hago un movimiento ficticio para ver si nos deja en un lugar adecuado
+                    pos1=pos1A;
+                    pos2=pos2A;
+                    switch(mov){
+                        case 'A':case 'a': pos2--; break; //Izquierda
+                        case 'D':case 'd': pos2++; break; //Derecha
+                        case 'W':case 'w': pos1--; break; //Subir
+                        case 'S':case 's': pos1++; break; //Bajar
+                        default: printf("Comando equivocado\n"); break;
+                    }
+                    if(pos1>=0 && pos1<tam && pos2>=0 && pos2<tam)
+                        if(matriz[pos1][pos2]!='O'){
+                            matriz[pos1A][pos2A]=' ';
+                            matriz[pos1][pos2]='*';
+                            pos1A=pos1;
+                            pos2A=pos2;
+                        }
+
+                     */
 
                 break;
                 case '1':
