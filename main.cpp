@@ -101,7 +101,10 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
             fila++;
             columna = rand() % 5;
             columna++;
-        }while(!tablero[fila][columna]==' ');
+        }while(tablero[fila][columna]!=' ');
+
+        printf("Celda tablero: |%c|\n", tablero[fila][columna]);
+        printf("Manzana: Fila: %d - Columna: %d\n", fila, columna);
 
 
         // Esa celda tiene un espacio, guardo la manzana
