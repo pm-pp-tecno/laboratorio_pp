@@ -290,6 +290,8 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6]){
 
     }
 
+    return comio_manzana;
+
 };
 
 
