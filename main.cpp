@@ -303,7 +303,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         else tablero[fila_cabeza][columna_cabeza] = '*';
 
 
-        tablero[fila_vieja][columna_vieja] = ' ';
+        //tablero[fila_vieja][columna_vieja] = ' ';
 
 
         fila_vieja = fila_cabeza;
