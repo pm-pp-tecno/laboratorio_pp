@@ -244,7 +244,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     if (fila_cabeza > 2) {
                         fila_cabeza--;
                         //printf("ARRIBA\n");
-                        if (tablero[fila_cabeza][columna_cabeza] == ' ')
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
                 break;
@@ -253,7 +253,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     if (columna_cabeza < 6) {
                         columna_cabeza++;
                         //printf("DERECHA\n");
-                        if (tablero[fila_cabeza][columna_cabeza] == ' ')
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
                 break;
@@ -262,7 +262,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     if (fila_cabeza < 6) {
                         fila_cabeza++;
                         //printf("ABAJO\n");
-                        if (tablero[fila_cabeza][columna_cabeza] == ' ')
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
                 break;
@@ -271,7 +271,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     if (columna_cabeza > 2) {
                         columna_cabeza--;
                         //printf("IZQUIERDA\n");
-                        if (tablero[fila_cabeza][columna_cabeza] == ' ')
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
                 break;
@@ -345,7 +345,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
 /// 1 acerto - 0 no acerto
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2]){
     printf("Chequeo si acerto la serpiente...\n");
-    return true;
+    return false;
 };
 
 
