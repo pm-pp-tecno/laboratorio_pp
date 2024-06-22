@@ -19,7 +19,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6],
 
 /// Muevo la serpiente en el tablero
 /// Si come una manzana devuelve true, en caso contrario false
-bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2]);
+bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2], int tableroAbierto);
 
 /// Indica si la serpiente se encuentra en la celda indicada
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char tablero [][6]);
@@ -41,7 +41,7 @@ int main()
     int tamanio=6, cantManzanas=4, puntosUsuario=0, puntosSerpiente=0;
     int filaUsuario=0, colUsuario=0, contador=0, fila, columna;
     char tablero[6][6], serpiente[3][2], manzanas[4][2], caracterComa=',', cabezaSerpiente='176', cuerpoSerpiente='174', comaUsuario, charManzana='180';
-    bool acertoSerpiente=false, comioManzana=false, datos_validos=false, serpiente_definida=false;
+    bool acertoSerpiente=false, comioManzana=false, serpiente_definida=false, tableroAbierto=false;
 
     printf("Bienvenidos\n\n");
 
@@ -52,7 +52,7 @@ int main()
     do {
 
         ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
-        comioManzana = mover_serpiente(tamanio, serpiente, tablero, manzanas);
+        comioManzana = mover_serpiente(tamanio, serpiente, tablero, manzanas, tableroAbierto);
         if (comioManzana == true) {
 
             // Borro las manzanas
@@ -65,7 +65,6 @@ int main()
         }
         acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente, tablero);
         if (acertoSerpiente) comioManzana = false;
-        //comioManzana = comio_manzana(manzanas, serpiente);
 
         // Chequea si hubo algun evento en este turno
         if (acertoSerpiente || comioManzana){
@@ -93,17 +92,13 @@ int main()
 
                         imprimir_tablero_eventos(tamanio, manzanas, serpiente, tablero);
                         ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
-                        mover_serpiente(tamanio, serpiente, tablero, manzanas);
+                        mover_serpiente(tamanio, serpiente, tablero, manzanas, tableroAbierto);
                         acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente, tablero);
-                        //comioManzana = comio_manzana(manzanas, serpiente);
 
                         if (acertoSerpiente){
                             puntosUsuario++;
                             printf("Serpiente encontrada!\n");
-                        } /*else{
-                            puntosSerpiente++;
-                            printf("La serpiente se ha comido una manzana\n");
-                        }*/
+                        }
                         printf("Puntos usuario: %d\nPuntos serpiente: %d\n", puntosUsuario, puntosSerpiente);
                     }
 
@@ -291,7 +286,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6],
 };
 
 /// Muevo la serpiente en el tablero
-bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2]){
+bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2], int tableroAbierto){
     printf("Muevo la serpiente...\n");
 
     //int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
@@ -381,7 +376,11 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     //ariba de cabeza
                     if (fila_cabeza > 2) {
                         fila_cabeza--;
-                        //printf("ARRIBA\n");
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
+                            encontre_celda = true;
+                    } else if (tableroAbierto == true) {
+                        // fila_cabeza == 1, entonces aparece en 6
+                        fila_cabeza = 6;
                         if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
@@ -390,7 +389,11 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     //derecha de cabeza
                     if (columna_cabeza < 6) {
                         columna_cabeza++;
-                        //printf("DERECHA\n");
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
+                            encontre_celda = true;
+                    } else if (tableroAbierto == true) {
+                        // columna_cabeza == 6, entonces aparece en 1
+                        columna_cabeza = 1;
                         if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
@@ -399,7 +402,11 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     //abajo de cabeza
                     if (fila_cabeza < 6) {
                         fila_cabeza++;
-                        //printf("ABAJO\n");
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
+                            encontre_celda = true;
+                    } else if (tableroAbierto == true) {
+                        // fila_cabeza == 6, entonces aparece en 1
+                        columna_cabeza = 1;
                         if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
@@ -408,7 +415,11 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
                     //izquierda de cabeza
                     if (columna_cabeza > 2) {
                         columna_cabeza--;
-                        //printf("IZQUIERDA\n");
+                        if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
+                            encontre_celda = true;
+                    } else if (tableroAbierto == true) {
+                        // columna_cabeza == 1, entonces aparece en 6
+                        columna_cabeza = 6;
                         if (tablero[fila_cabeza][columna_cabeza] == ' ' || tablero[fila_cabeza][columna_cabeza] == 'o')
                             encontre_celda = true;
                     }
@@ -582,12 +593,10 @@ bool ingresar_celda(int tamanio, int &filaUsuario, char &comaUsuario, int &colUs
 
         //printf("Fila usuario: %d - Columna usuario: %d\n", filaUsuario, colUsuario);
 
-        //datos_validos = validar_datos(tamanio, filaUsuario, comaUsuario, colUsuario);
         if (filaUsuario>0 && filaUsuario<7 && colUsuario>0 && colUsuario<7 && comaUsuario==',' && buffer == '\n')
             return true;
         else{
 
-            //if (!datos_validos) printf("Entrada invalida, vuelva a intentarlo:\n");
             printf("Entrada invalida, vuelva a intentarlo:\n");
         }
 
