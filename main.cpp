@@ -19,7 +19,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6],
 
 /// Muevo la serpiente en el tablero
 /// Si come una manzana devuelve true, en caso contrario false
-bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2], int tableroAbierto);
+bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2], bool tableroAbierto);
 
 /// Indica si la serpiente se encuentra en la celda indicada
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char tablero [][6]);
@@ -77,13 +77,12 @@ int main()
             }
             printf("Puntos usuario: %d\nPuntos serpiente: %d\n", puntosUsuario, puntosSerpiente);
 
-
             // Para ambos eventos se imprime el mismo tablero de eventos.
             // Durante 3 turnos imprime el tablero con la serpiente visible.
             // En cada uno de estos turnos le vuelve a pedir al usuario que ingrese una celda
-            // Luego de ingresar la celda setea unas nuevas manzanas y mueve la serpiente (3 turnos)
+            // Luego de ingresar la celda mueve la serpiente (3 turnos)
             // Le avisa si acerto o no
-            // Luego de esos 3 turnos imprime el tablero normal (4 manzanas y no se ve la serpiente).
+            // Luego de esos 3 turnos imprime el tablero normal (4 manzanas nuevas y no se ve la serpiente).
             // Luego de eso comienza el bucle principal de nuevo, pidiendole que ingrese nueva celda.
 
             if (puntosUsuario < 3 && puntosSerpiente < 3) {
@@ -286,7 +285,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6],
 };
 
 /// Muevo la serpiente en el tablero
-bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2], int tableroAbierto){
+bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2], bool tableroAbierto){
     printf("Muevo la serpiente...\n");
 
     //int fila_cabeza, columna_cabeza, fila_cuerpo, columna_cuerpo, fila_cola, columna_cola;
@@ -499,6 +498,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
 };
 
 /// Indica si la serpiente se encuentra en la celda indicada
+/// Si encuentra a la serpiente devuelve true
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char tablero [][6]){
     bool encontrada=false;
     int fila, columna;
