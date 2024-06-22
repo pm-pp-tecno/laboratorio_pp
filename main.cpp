@@ -15,7 +15,7 @@ using namespace std;
 void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char tablero[][6], bool serpiente_definida);
 
 /// Imprime el tablero normal
-void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6]);
+void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6], char serpiente[][2], int puntosUsuario, int puntosSerpiente);
 
 /// Muevo la serpiente en el tablero
 /// Si come una manzana devuelve true, en caso contrario false
@@ -46,11 +46,11 @@ int main()
     printf("Bienvenidos\n\n");
 
     setear_tablero(tamanio, manzanas, serpiente, tablero, serpiente_definida);
+    imprimir_tablero_normal(tamanio, manzanas, tablero, serpiente, puntosUsuario, puntosSerpiente);
 
     // bucle principal del juego
     do {
 
-        imprimir_tablero_normal(tamanio, manzanas, tablero);
         ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
         comioManzana = mover_serpiente(tamanio, serpiente, tablero, manzanas);
         if (comioManzana == true) {
@@ -111,9 +111,9 @@ int main()
             }
 
             setear_tablero(tamanio, manzanas, serpiente, tablero, true);
-            //imprimir_tablero_normal(tamanio, manzanas, tablero);
         } else printf("Sigue buscando\n");
 
+        imprimir_tablero_normal(tamanio, manzanas, tablero, serpiente, puntosUsuario, puntosSerpiente);
 
     } while (puntosUsuario < 3 && puntosSerpiente < 3);
 
@@ -245,7 +245,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 };
 
 /// Imprime el tablero normal
-void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6]){
+void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6], char serpiente[][2], int puntosUsuario, int puntosSerpiente){
 
     srand (time(NULL));
     int fila, columna;
@@ -263,6 +263,18 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
         fila = manzanas[i][0];
         columna = manzanas[i][1];
         tablero[fila][columna] = 'o';
+    }
+
+    // Si uno de los 2 gano, muestro un ultimo tablero con las manzanas y la serpiente
+    // para poder confirmar los valores.
+    if (puntosUsuario == 3 || puntosSerpiente == 3) {
+        // Sumo la serpiente
+        for (int i = 1; i < 4; i++) {
+            fila = serpiente[i][0];
+            columna = serpiente[i][1];
+            if (i==1) tablero[fila][columna] = '#';
+            else tablero[fila][columna] = '*';
+        }
     }
 
     //printf("Tablero normal\n");
