@@ -63,6 +63,7 @@ int main()
 
         }
         acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente, tablero);
+        if (acertoSerpiente) comioManzana = false;
         //comioManzana = comio_manzana(manzanas, serpiente);
 
         // Chequea si hubo algun evento en este turno
@@ -485,19 +486,26 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
 
 /// Indica si la serpiente se encuentra en la celda indicada
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char tablero [][6]){
-    bool encontrada;
+    bool encontrada=false;
     int fila, columna;
 
     printf("Chequeo si acerto la serpiente...\n");
-       for (int i = 1; i < 4; i++) {
-            fila = serpiente[i][0];
-            columna = serpiente[i][1];
-            if (tablero[fila][columna] == tablero[filaUsuario][colUsuario]){
-                encontrada=true;
-            }
-            /*else{
-            encontrada=false;
-            }*/
+
+    /*
+    for (int i = 1; i < 4; i++) {
+        fila = serpiente[i][0];
+        columna = serpiente[i][1];
+        if (tablero[fila][columna] == tablero[filaUsuario][colUsuario]){
+            encontrada=true;
+        }
+
+    }
+    */
+
+    for (int i = 1; i < 4; i++) {
+        if (filaUsuario == serpiente[i][0] && colUsuario == serpiente[i][1]){
+            encontrada=true;
+        }
        }
     return encontrada;
 };
