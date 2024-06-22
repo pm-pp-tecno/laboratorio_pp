@@ -10,21 +10,22 @@ using namespace std;
 
 //Funciones:
 
-/// Inicializa las manzanas en el tablero.
-/// Llamada al iniciar el programa y luego de los eventos.
+/// Inicializa las manzanas en el tablero
+/// Llamada al iniciar el programa y luego de los eventos
 void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char tablero[][6], bool serpiente_definida);
 
 /// Imprime el tablero normal
 void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6]);
 
 /// Muevo la serpiente en el tablero
+/// Si come una manzana devuelve true, en caso contrario false
 bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char manzanas[][2]);
 
 /// Indica si la serpiente se encuentra en la celda indicada
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char tablero [][6]);
 
 /// Imprime el tablero de eventos
-/// Llamado desde eventos para imprimir los 2 turnos especiales de serpiente visible.
+/// Llamado desde eventos para imprimir los 3 turnos especiales de serpiente visible.
 void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][2], char tablero[][6]);
 
 /// Ingresa movimiento del jugador
@@ -88,13 +89,14 @@ int main()
 
             if (puntosUsuario < 3 && puntosSerpiente < 3) {
                 for (contador=0; contador < 3; contador++){
-                    imprimir_tablero_eventos(tamanio, manzanas, serpiente, tablero);
-                    ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
-                    mover_serpiente(tamanio, serpiente, tablero, manzanas);
-                    acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente, tablero);
-                    //comioManzana = comio_manzana(manzanas, serpiente);
-
                     if (puntosUsuario < 3 && puntosSerpiente < 3) {
+
+                        imprimir_tablero_eventos(tamanio, manzanas, serpiente, tablero);
+                        ingresar_celda(tamanio, filaUsuario, comaUsuario, colUsuario);// datos validos, puedo mover la serpiente
+                        mover_serpiente(tamanio, serpiente, tablero, manzanas);
+                        acertoSerpiente = acerto_serpiente(filaUsuario, colUsuario, serpiente, tablero);
+                        //comioManzana = comio_manzana(manzanas, serpiente);
+
                         if (acertoSerpiente){
                             puntosUsuario++;
                             printf("Serpiente encontrada!\n");
@@ -108,7 +110,7 @@ int main()
                 }
             }
 
-            setear_tablero(tamanio, manzanas, serpiente, tablero, serpiente_definida);
+            setear_tablero(tamanio, manzanas, serpiente, tablero, true);
             //imprimir_tablero_normal(tamanio, manzanas, tablero);
         } else printf("Sigue buscando\n");
 
@@ -132,8 +134,10 @@ int main()
 
 
 
-/// manzana tiene 4 elementos de 2 elementos cada una: fila y columna.
-/// serpiente tiene 3 elementos de 2 elementos cada una: fila y columna.
+/// Manzana tiene 4 elementos de 2 elementos cada una: fila y columna.
+/// Serpiente tiene 3 elementos de 2 elementos cada una: fila y columna.
+/// La cabeza (#) tiene sus cordenadas fila columna en serpiente[1][0] y serpiente[1][1] respectivamente
+/// EL resto del cuerpo esta en serpiente[2] y serpiente[3] == *
 void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char tablero[][6], bool serpiente_definida){
     int fila, columna;
     srand (time(NULL));
@@ -144,12 +148,13 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
             tablero[i][j] = ' ';
         }
     }
-    if (!serpiente_definida){       // serpiente[0] tiene la celda de la cabeza
-                                    // serpiente[1] y [2] tienen el cuerpo
-                                    // si viene de eventos la serpiente ya esta definida
 
+
+    // serpiente[0] tiene la celda de la cabeza
+    // serpiente[1] y [2] tienen el cuerpo
+    // si viene de eventos la serpiente ya esta definida
+    if (!serpiente_definida){
         for (int i = 1; i < 4; i++) {
-
             /*
             // Esa celda tiene un espacio, me sirve para la serpiente
             // Pero no la voy a guardar asi puedo imprimir en normal
@@ -190,6 +195,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 
         serpiente_definida = true;
 
+        /*
         printf("Tablero con serpiente definida\n");
         printf("   1 2 3 4 5 6\n");
         for (int i = 1; i < 7; i++) {
@@ -200,6 +206,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
             printf("\n");
         }
         printf("\n");
+        */
 
     } else {
 
@@ -227,10 +234,8 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
         //printf("Celda tablero: |%c|\n", tablero[fila][columna]);
         //printf("Manzana: Fila: %d - Columna: %d\n", fila, columna);
 
-
         // Esa celda tiene un espacio, guardo la manzana
         tablero[fila][columna] = 'o';
-
 
         // guardo las manzanas para comparar mas rapido despues
         manzanas[i][0] = fila;
@@ -243,7 +248,6 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
 void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6]){
 
     srand (time(NULL));
-
     int fila, columna;
 
 
@@ -261,7 +265,7 @@ void imprimir_tablero_normal(int tamanio, char manzanas[][2], char tablero[][6])
         tablero[fila][columna] = 'o';
     }
 
-    printf("Tablero normal\n");
+    //printf("Tablero normal\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
         printf("%d |", i);
@@ -296,6 +300,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         tablero[fila][columna] = 'o';
     }
 
+    /*
     // Temporal, borrar! El tablero trae manzanas
     // Tengo que ubicar primero a la serpiente.
     printf("Tablero antes de sumar serpiente.\n");
@@ -307,7 +312,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         }
         printf("\n");
     }
-
+    */
 
 
 
@@ -319,6 +324,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         else tablero[fila][columna] = '*';
     }
 
+    /*
     printf("Tablero antes de mover serpiente.\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
@@ -328,6 +334,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         }
         printf("\n");
     }
+    */
 
 
     // ubico la cabeza:
@@ -408,10 +415,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
 
         }while (!encontre_celda);
 
-        //hacer chequeos a partir de la celda de la cabeza.
-        //serpiente[3][0] queda la cola. luego en el proximo queda el cuerpo y en serpiente[0][0] queda la cabeza.
-        //serpiente[i][0] = fila_nueva;
-        //serpiente[i][1] = columna_nueva;
+        //serpiente[3][0] queda la cola. luego en el proximo queda el cuerpo y en serpiente[1][0] queda la cabeza.
 
         serpiente[i][0] = fila_cabeza;
         serpiente[i][1] = columna_cabeza;
@@ -421,30 +425,15 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         if (i == 1) tablero[fila_cabeza][columna_cabeza] = '#';
         else tablero[fila_cabeza][columna_cabeza] = '*';
 
-
-        //tablero[fila_vieja][columna_vieja] = ' ';
-
-
         fila_vieja = fila_cabeza;
         columna_vieja = columna_cabeza;
 
-
-        printf("Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
-
-        // ubico donde estaria avanzando la cabeza:
-        //fila_cabeza = fila_cabeza;
-        //columna_cabeza = columna_cabeza;
-
-
-        // volver a insertar la serpiente
-
-
-
+        //printf("Fila cabeza: %d - Columna cabeza: %d\n", fila_cabeza, columna_cabeza);
 
     }
 
-
-    printf("Tablero despues de mover serpiente.\n");
+    /*
+    //printf("Tablero despues de mover serpiente.\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
         printf("%d |", i);
@@ -453,6 +442,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         }
         printf("\n");
     }
+    */
 
 
     for (int i = 1; i < 7; i++) {
@@ -469,7 +459,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         else tablero[fila][columna] = '*';
     }
 
-
+    /*
     printf("Tablero despues de actualizar serpiente.\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
@@ -479,6 +469,7 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
         }
         printf("\n");
     }
+    */
 
     return comio_manzana;
 
@@ -506,12 +497,12 @@ bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char
         if (filaUsuario == serpiente[i][0] && colUsuario == serpiente[i][1]){
             encontrada=true;
         }
-       }
+    }
     return encontrada;
 };
 
 /// Imprime el tablero de eventos
-/// Llamado desde eventos para imprimir los 2 turnos especiales de serpiente visible.
+/// Llamado desde eventos para imprimir los 3 turnos especiales de serpiente visible.
 /// Deberia luego hacer un llamado a setear manzanas para obtener nuevas manzanas.
 /// Luego si va nuevamente a comienzo de bucle imprimir_tablero_normal
 void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][2], char tablero[][6]){
@@ -546,7 +537,7 @@ void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][
     }
 
 
-    printf("Tablero eventos. La serpiente deberia estar revelada y sin manzanas\n");
+    //printf("Tablero eventos. La serpiente deberia estar revelada y sin manzanas\n");
     printf("   1 2 3 4 5 6\n");
     for (int i = 1; i < 7; i++) {
         printf("%d ", i);
@@ -558,7 +549,7 @@ void imprimir_tablero_eventos(int tamanio, char manzanas[][2], char serpiente[][
 
 };
 
-///ingresa movimiento del jugador
+/// Ingresa movimiento del jugador
 bool ingresar_celda(int tamanio, int &filaUsuario, char &comaUsuario, int &colUsuario){
 
     char buffer;
