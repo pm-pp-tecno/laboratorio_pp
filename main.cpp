@@ -127,7 +127,7 @@ void setear_tablero(int tamanio, char manzanas[][2], char serpiente[][2], char t
     int fila, columna;
     srand (time(NULL));
 
-     // Todas las celdas con espacios
+    // Todas las celdas con espacios
     for (int i = 1; i < 7; i++) {
         for (int j = 1; j < 7; j++) {
             tablero[i][j] = ' ';
@@ -382,7 +382,6 @@ bool mover_serpiente(int tamanio, char serpiente[][2], char tablero[][6], char m
 /// Si encuentra a la serpiente devuelve true
 bool acerto_serpiente(int filaUsuario, int colUsuario, char serpiente[][2], char tablero [][6]){
     bool encontrada=false;
-    int fila, columna;
 
     printf("Chequeo si acerto la serpiente...\n");
 
@@ -451,7 +450,7 @@ bool ingresar_celda(int tamanio, int &filaUsuario, char &comaUsuario, int &colUs
         while (buffer != '\n') {
             buffer=getchar();
         }
-    } while (1==1);
+    } while (true);
 
     return true;
 };
